@@ -42,7 +42,7 @@ class ViewController: UIViewController, VKSdkDelegate, VKSdkUIDelegate {
     @IBAction func segueToTabBarController(_ sender: UIButton) {
         goToTabBarController()
     }
-
+    
     func goToTabBarController(){
         print("\n\n\n\n\n\n____________________________________\n\n\n\n\n\n")
         performSegue(withIdentifier: "showTabBarController", sender: self)
@@ -53,13 +53,13 @@ class ViewController: UIViewController, VKSdkDelegate, VKSdkUIDelegate {
     }
     
     @objc(vkSdkShouldPresentViewController:) func vkSdkShouldPresent(_ controller: UIViewController!) {
-//        navigationController?.topViewController?.present(controller, animated: true, completion: nil)
+        //        navigationController?.topViewController?.present(controller, animated: true, completion: nil)
         present(controller, animated: true, completion: nil)
     }
     
     func vkSdkNeedCaptchaEnter(_ captchaError: VKError!) {
         let captchaViewController = VKCaptchaViewController.captchaControllerWithError(captchaError)
-//        captchaViewController?.present(in: navigationController?.topViewController)
+        //        captchaViewController?.present(in: navigationController?.topViewController)
         captchaViewController?.present(in: self)
     }
     
@@ -74,45 +74,49 @@ class ViewController: UIViewController, VKSdkDelegate, VKSdkUIDelegate {
             //perform segue here
             goToTabBarController()
         } else if let _ = result.error {
-            present(UIAlertController(title: "Error", message: "Access denied", preferredStyle: .alert), animated: true, completion: nil)
+            let alertController = UIAlertController(title: "Error", message: "Access denied1", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                
+            }))
+            present(alertController, animated: true, completion: nil)
         }
         
     }
     func vkSdkUserAuthorizationFailed() {
-        present(UIAlertController(title: "Error", message: "Access denied", preferredStyle: .alert), animated: true, completion: nil)
-//        navigationController?.popToRootViewController(animated: true)
+        present(UIAlertController(title: "Error", message: "Access denied2", preferredStyle: .alert), animated: true, completion: nil)
+        //        navigationController?.popToRootViewController(animated: true)
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard segue.identifier == "showTabBarController" else { return }
-//        guard let destinationVC = segue.destination as? FriendsViewController else { return }
-//        let getFriendsRequest = VKApi.friends().get(destinationVC.parameters)
-//        getFriendsRequest?.execute(resultBlock: { (response) in
-//            print(response?.json)
-//            if let wrapperDictionary = response?.json as! [String : Any]?{
-//                if let friendsCountString = wrapperDictionary["count"] as? Int{
-//                    destinationVC.friendsCount = friendsCountString
-//                }
-//                destinationVC.friendsDictionaryArray = wrapperDictionary["items"] as? [[String: Any]]
-//                for friendsDictionary in destinationVC.friendsDictionaryArray!{
-//                    let friend = Friend()
-//                    friend.firstName = friendsDictionary["first_name"] as? String
-//                    friend.lastName = friendsDictionary["last_name"] as? String
-//                    friend.id = friendsDictionary["id"] as? Int
-//                    friend.isOnline = friendsDictionary["online"] as? Int == 0 ? false : true
-//                    if friend.isOnline != nil {
-//                        friend.isMobile = friendsDictionary["online_mobile"] == nil ? false : true
-//                    }
-//                    friend.imageUrl = URL(string: friendsDictionary["photo_50"] as! String)
-//                    destinationVC.friends.append(friend)
-//                }
-//            }
-//            
-//            print(destinationVC.friends)
-//            
-//            }, errorBlock: { (error) in
-//                print(error)
-//        })
-//    }
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //        guard segue.identifier == "showTabBarController" else { return }
+    //        guard let destinationVC = segue.destination as? FriendsViewController else { return }
+    //        let getFriendsRequest = VKApi.friends().get(destinationVC.parameters)
+    //        getFriendsRequest?.execute(resultBlock: { (response) in
+    //            print(response?.json)
+    //            if let wrapperDictionary = response?.json as! [String : Any]?{
+    //                if let friendsCountString = wrapperDictionary["count"] as? Int{
+    //                    destinationVC.friendsCount = friendsCountString
+    //                }
+    //                destinationVC.friendsDictionaryArray = wrapperDictionary["items"] as? [[String: Any]]
+    //                for friendsDictionary in destinationVC.friendsDictionaryArray!{
+    //                    let friend = Friend()
+    //                    friend.firstName = friendsDictionary["first_name"] as? String
+    //                    friend.lastName = friendsDictionary["last_name"] as? String
+    //                    friend.id = friendsDictionary["id"] as? Int
+    //                    friend.isOnline = friendsDictionary["online"] as? Int == 0 ? false : true
+    //                    if friend.isOnline != nil {
+    //                        friend.isMobile = friendsDictionary["online_mobile"] == nil ? false : true
+    //                    }
+    //                    friend.imageUrl = URL(string: friendsDictionary["photo_50"] as! String)
+    //                    destinationVC.friends.append(friend)
+    //                }
+    //            }
+    //
+    //            print(destinationVC.friends)
+    //            
+    //            }, errorBlock: { (error) in
+    //                print(error)
+    //        })
+    //    }
     
 }
