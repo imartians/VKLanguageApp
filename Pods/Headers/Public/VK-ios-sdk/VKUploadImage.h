@@ -1,5 +1,5 @@
 //
-//  VKAudio.h
+//  VKUploadImage.h
 //
 //  Copyright (c) 2014 VK.com
 //
@@ -11,7 +11,7 @@
 //  subject to the following conditions:
 //
 //  The above copyright notice and this permission notice shall be included in all
-//  copies or suabstantial portions of the Software.
+//  copies or substantial portions of the Software.
 //
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
@@ -20,27 +20,33 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "VKApiObjectArray.h"
+#import "VKImageParameters.h"
 
-@class VKUser;
+/**
+Contains image data with image description
+*/
+@interface VKUploadImage : VKObject
 
-@interface VKAudio : VKApiObject
+/// Bytes of image
+@property(nonatomic, strong) NSData *imageData;
+/// Source image
+@property(nonatomic, strong) UIImage *sourceImage;
+/// Image basic info
+@property(nonatomic, strong) VKImageParameters *parameters;
 
-@property(nonatomic, strong) NSNumber *id;
-@property(nonatomic, strong) NSNumber *owner_id;
-@property(nonatomic, strong) NSString *artist;
-@property(nonatomic, strong) NSString *title;
-@property(nonatomic, strong) NSNumber *duration;
-@property(nonatomic, strong) NSString *url;
-@property(nonatomic, strong) NSNumber *lyrics_id;
-@property(nonatomic, strong) NSNumber *album_id;
-@property(nonatomic, strong) NSNumber *genre_id;
+/**
+Create new image data representation used for upload
+@param data Bytes of image
+@param params Image basic info
+@return Prepared object for using in upload
+*/
++ (instancetype)uploadImageWithData:(NSData *)data andParams:(VKImageParameters *)params;
 
-@property(nonatomic, assign) BOOL fromCache;
-@property(nonatomic, assign) BOOL ignoreCache;
-
-@end
-
-@interface VKAudios : VKApiObjectArray<VKAudio*>
-@property(nonatomic, strong) VKUser *user;
+/**
+Create new image representation used for upload
+@param image Source image
+@param params Image basic info
+@return Prepared object for using in upload
+*/
++ (instancetype)uploadImageWithImage:(UIImage *)image andParams:(VKImageParameters *)params;
 @end

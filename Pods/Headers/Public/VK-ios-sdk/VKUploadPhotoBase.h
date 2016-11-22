@@ -1,5 +1,5 @@
 //
-//  VKAudio.h
+//  VKPhotoUploadBase.h
 //
 //  Copyright (c) 2014 VK.com
 //
@@ -11,7 +11,7 @@
 //  subject to the following conditions:
 //
 //  The above copyright notice and this permission notice shall be included in all
-//  copies or suabstantial portions of the Software.
+//  copies or substantial portions of the Software.
 //
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
@@ -20,27 +20,33 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "VKApiObjectArray.h"
+#import "VKRequest.h"
+#import "VKImageParameters.h"
+#import "VKOperation.h"
 
-@class VKUser;
+/**
+Provides common part of photo upload process
+*/
+@interface VKUploadPhotoBase : VKRequest
+/// ID of album to upload
+@property(nonatomic, assign) NSInteger albumId;
+/// ID of group to upload
+@property(nonatomic, assign) NSInteger groupId;
+/// ID of user wall to upload
+@property(nonatomic, assign) NSInteger userId;
 
-@interface VKAudio : VKApiObject
+/// Passed image parameters
+@property(nonatomic, strong) VKImageParameters *imageParameters;
+/// Image to upload
+@property(nonatomic, strong) UIImage *image;
 
-@property(nonatomic, strong) NSNumber *id;
-@property(nonatomic, strong) NSNumber *owner_id;
-@property(nonatomic, strong) NSString *artist;
-@property(nonatomic, strong) NSString *title;
-@property(nonatomic, strong) NSNumber *duration;
-@property(nonatomic, strong) NSString *url;
-@property(nonatomic, strong) NSNumber *lyrics_id;
-@property(nonatomic, strong) NSNumber *album_id;
-@property(nonatomic, strong) NSNumber *genre_id;
-
-@property(nonatomic, assign) BOOL fromCache;
-@property(nonatomic, assign) BOOL ignoreCache;
-
+- (instancetype)initWithImage:(UIImage *)image parameters:(VKImageParameters *)parameters;
 @end
 
-@interface VKAudios : VKApiObjectArray<VKAudio*>
-@property(nonatomic, strong) VKUser *user;
+/**
+Special operation for execute upload
+*/
+@interface VKUploadImageOperation : VKOperation
+
++ (instancetype)operationWithUploadRequest:(VKUploadPhotoBase *)request;
 @end
